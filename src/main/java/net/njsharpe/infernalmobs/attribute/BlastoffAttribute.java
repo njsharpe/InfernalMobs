@@ -30,11 +30,13 @@ public class BlastoffAttribute extends Attribute implements Cooldown {
 
     @Override
     public void onUpdate(InfernalEntity entity) {
+        super.onUpdate(entity);
         this.useSpecial(entity, EntityHelper.getNearestPlayer(entity.getWorld(), entity.getEntity(), 12.0F));
     }
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         if(event.getDamager() != null) this.useSpecial(event.getInfernalEntity(), event.getDamager());
     }
 

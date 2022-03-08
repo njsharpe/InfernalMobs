@@ -32,6 +32,7 @@ public class BerserkAttribute extends Attribute {
 
     @Override
     public void onAttack(InfernalEntityAttackEvent event) {
+        super.onAttack(event);
         InfernalEntity entity = event.getInfernalDamager();
         event.setDamage(event.getFinalDamage() * 2.0D);
         entity.getEntity().damage(event.getFinalDamage() / 1.5D);

@@ -37,17 +37,20 @@ public class CloakingAttribute extends Attribute implements Cooldown {
 
     @Override
     public void onUpdate(InfernalEntity entity) {
+        super.onUpdate(entity);
         if(!this.hasTarget()) return;
         this.useSpecial(entity, null);
     }
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         this.useSpecial(event.getInfernalEntity(), null);
     }
 
     @Override
     public void useSpecial(InfernalEntity source, LivingEntity target) {
+        super.useSpecial(source, target);
         long time = System.currentTimeMillis();
         if(!this.canUseAbility()) return;
         this.deltaTime = time + this.getCooldown();

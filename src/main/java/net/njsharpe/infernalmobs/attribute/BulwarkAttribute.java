@@ -24,6 +24,7 @@ public class BulwarkAttribute extends Attribute {
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         event.setDamage(event.getFinalDamage() / 2.0D);
     }
 

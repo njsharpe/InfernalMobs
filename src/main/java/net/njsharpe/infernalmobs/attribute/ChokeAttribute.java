@@ -40,6 +40,7 @@ public class ChokeAttribute extends Attribute {
 
     @Override
     public void onUpdate(InfernalEntity entity) {
+        super.onUpdate(entity);
         if(!this.hasTarget()) return;
         if(this.getTarget() != this.target) {
             if(this.target != null) this.send(this.air);
@@ -68,6 +69,7 @@ public class ChokeAttribute extends Attribute {
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         if(this.target != null && event.getDamager() == this.target && this.air != RESET_AIR_VALUE) {
             this.air += 60;
             if(this.air > MAXIMUM_AIR) {
@@ -79,6 +81,7 @@ public class ChokeAttribute extends Attribute {
 
     @Override
     public void onDeath(InfernalEntityDeathEvent event) {
+        super.onDeath(event);
         this.air = MAXIMUM_AIR;
         if(this.target != null) {
             this.send(this.air);

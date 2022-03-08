@@ -36,6 +36,7 @@ public class EnderAttribute extends Attribute implements Cooldown {
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         long time = System.currentTimeMillis();
         Random random = new Random();
         LivingEntity entity = event.getInfernalEntity().getEntity();

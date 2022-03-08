@@ -31,6 +31,7 @@ public class LifestealAttribute extends Attribute {
 
     @Override
     public void onAttack(InfernalEntityAttackEvent event) {
+        super.onAttack(event);
         InfernalEntity damager = event.getInfernalDamager();
         double health = damager.getHealth() + event.getDamage();
         event.getInfernalDamager().setHealth(Math.min(health, damager.getMaxHealth()));

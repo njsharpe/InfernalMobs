@@ -40,6 +40,7 @@ public class GravityAttribute extends Attribute implements Cooldown {
 
     @Override
     public void onUpdate(InfernalEntity entity) {
+        super.onUpdate(entity);
         if(this.hasTarget() && this.getTarget() instanceof Player) this.useSpecial(entity, this.getTarget());
     }
 

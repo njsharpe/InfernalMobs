@@ -26,6 +26,7 @@ public class FieryAttribute extends Attribute {
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         if(event.getDamager() == null) return;
         event.getDamager().setFireTicks(3 * 20);
         event.getEntity().setFireTicks(0);
@@ -33,6 +34,7 @@ public class FieryAttribute extends Attribute {
 
     @Override
     public void onAttack(InfernalEntityAttackEvent event) {
+        super.onAttack(event);
         if(!(event.getEntity() instanceof LivingEntity)) return;
         LivingEntity entity = (LivingEntity) event.getEntity();
         entity.setFireTicks(3 * 20);

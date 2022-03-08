@@ -37,6 +37,7 @@ public class AlchemistAttribute extends Attribute implements Cooldown {
 
     @Override
     public void onUpdate(InfernalEntity entity) {
+        super.onUpdate(entity);
         if(!this.hasTarget()) return;
         long time = System.currentTimeMillis();
         if(!this.canUseAbility()) return;

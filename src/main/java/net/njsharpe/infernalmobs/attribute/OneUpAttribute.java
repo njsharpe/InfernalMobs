@@ -34,6 +34,7 @@ public class OneUpAttribute extends Attribute {
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         InfernalEntity entity = event.getInfernalEntity();
         if(!entity.has("healed", PersistentDataType.INTEGER)) {
             entity.set("healed", PersistentDataType.INTEGER, 0);

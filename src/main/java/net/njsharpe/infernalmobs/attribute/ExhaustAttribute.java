@@ -26,12 +26,14 @@ public class ExhaustAttribute extends Attribute {
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         if(!(event.getDamager() instanceof Player)) return;
         ((Player) event.getDamager()).setExhaustion(1F);
     }
 
     @Override
     public void onAttack(InfernalEntityAttackEvent event) {
+        super.onAttack(event);
         if(!(event.getEntity() instanceof Player)) return;
         ((Player) event.getEntity()).setExhaustion(1F);
     }

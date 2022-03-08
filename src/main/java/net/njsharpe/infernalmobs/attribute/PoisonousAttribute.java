@@ -27,6 +27,7 @@ public class PoisonousAttribute extends Attribute {
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         if(event.getDamager() == null) return;
         LivingEntity entity = event.getDamager();
         if(!entity.hasPotionEffect(PotionEffectType.POISON)) {
@@ -36,6 +37,7 @@ public class PoisonousAttribute extends Attribute {
 
     @Override
     public void onAttack(InfernalEntityAttackEvent event) {
+        super.onAttack(event);
         if(!(event.getEntity() instanceof LivingEntity)) return;
         LivingEntity entity = (LivingEntity) event.getEntity();
         if(!entity.hasPotionEffect(PotionEffectType.POISON)) {
