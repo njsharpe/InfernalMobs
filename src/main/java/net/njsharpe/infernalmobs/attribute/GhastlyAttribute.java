@@ -2,15 +2,20 @@ package net.njsharpe.infernalmobs.attribute;
 
 import net.njsharpe.infernalmobs.InfernalMobs;
 import net.njsharpe.infernalmobs.entity.InfernalEntity;
+import net.njsharpe.infernalmobs.util.EntityHelper;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Fireball;
+import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class GhastlyAttribute extends Attribute {
+public class GhastlyAttribute extends Attribute implements Cooldown {
+
+    private long deltaTime = 0L;
 
     public GhastlyAttribute(@NotNull String name) {
         super(new NamespacedKey(InfernalMobs.get().orElseThrow(IllegalArgumentException::new), name));
@@ -28,17 +33,49 @@ public class GhastlyAttribute extends Attribute {
     }
 
     @Override
+    public void onUpdate(InfernalEntity entity) {
+        if(!this.hasTarget()) return;
+        long time = System.currentTimeMillis();
+        if(!this.canUseAbility()) return;
+        this.deltaTime = time + this.getCooldown();
+        this.useSpecial(entity, EntityHelper.getNearestPlayer(entity.getWorld(), entity.getEntity(), 12.0F));
+    }
+
+    @Override
     public void useSpecial(InfernalEntity source, LivingEntity target) {
         super.useSpecial(source, target);
-        Random random = new Random();
-        float chance = random.nextFloat();
-        if(chance >= 0.5F) {
-            Fireball fireball = source.getEntity().launchProjectile(Fireball.class);
-            Vector direction = target.getBoundingBox().getCenter()
-                    .subtract(source.getEntity().getBoundingBox().getCenter())
-                    .normalize();
-            fireball.setDirection(direction);
+
+        LivingEntity entity = source.getEntity();
+        if(target == null || !entity.hasLineOfSight(target)) return;
+
+        if(EntityHelper.distanceTo(entity, target) > 3.0F) {
+            Location s = source.getLocation();
+            Location t = target.getLocation();
+            double height = target.getBoundingBox().getHeight();
+            double x = t.getX() - s.getX();
+            double y = target.getBoundingBox().getMinY() + (height / 2.0F) - (s.getY() + (height / 2.0F));
+            double z = t.getZ() - s.getZ();
+            EntityHelper.setYRot(entity, -((float) Math.atan2(x, z)) * 180.0F / (float) Math.PI);
+            LargeFireball fireball = entity.launchProjectile(LargeFireball.class);
+            fireball.setYield(1.0F);
+            double offset = 2.0D;
+            Vector looking = entity.getEyeLocation().getDirection();
+            double nx = s.getX() + looking.getX() * offset;
+            double ny = s.getY() + (height / 2.0F) + 0.5D;
+            double nz = s.getZ() + looking.getZ() * offset;
+            fireball.teleport(new Location(source.getWorld(), nx, ny, nz));
+            fireball.setVelocity(new Vector(x, y, z));
         }
+    }
+
+    @Override
+    public long getCooldown() {
+        return 6000L;
+    }
+
+    @Override
+    public long getDeltaTime() {
+        return this.deltaTime;
     }
 
 }

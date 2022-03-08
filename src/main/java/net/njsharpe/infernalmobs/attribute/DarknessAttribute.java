@@ -1,6 +1,7 @@
 package net.njsharpe.infernalmobs.attribute;
 
 import net.njsharpe.infernalmobs.InfernalMobs;
+import net.njsharpe.infernalmobs.event.InfernalEntityAttackEvent;
 import net.njsharpe.infernalmobs.event.InfernalEntityHurtEvent;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
@@ -27,10 +28,13 @@ public class DarknessAttribute extends Attribute {
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
         if(event.getDamager() == null) return;
-        LivingEntity damager = event.getDamager();
-        // Blindness for 15 seconds on hit
-        if(damager.hasPotionEffect(PotionEffectType.BLINDNESS)) return;
-        damager.addPotionEffect(PotionEffectType.BLINDNESS.createEffect(15 * 20, 0));
+        event.getDamager().addPotionEffect(PotionEffectType.BLINDNESS.createEffect(120, 0));
     }
 
+    @Override
+    public void onAttack(InfernalEntityAttackEvent event) {
+        if(!(event.getEntity() instanceof LivingEntity)) return;
+        LivingEntity entity = (LivingEntity) event.getEntity();
+        entity.addPotionEffect(PotionEffectType.BLINDNESS.createEffect(120, 0));
+    }
 }

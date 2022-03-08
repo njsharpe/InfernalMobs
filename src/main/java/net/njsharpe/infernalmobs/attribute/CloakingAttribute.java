@@ -1,14 +1,18 @@
 package net.njsharpe.infernalmobs.attribute;
 
 import net.njsharpe.infernalmobs.InfernalMobs;
+import net.njsharpe.infernalmobs.entity.InfernalEntity;
 import net.njsharpe.infernalmobs.event.InfernalEntityHurtEvent;
+import net.njsharpe.infernalmobs.util.EntityHelper;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
-public class CloakingAttribute extends Attribute {
+public class CloakingAttribute extends Attribute implements Cooldown {
+
+    private long deltaTime = 0L;
 
     public CloakingAttribute(@NotNull String name) {
         super(new NamespacedKey(InfernalMobs.get().orElseThrow(IllegalArgumentException::new), name));
@@ -28,16 +32,36 @@ public class CloakingAttribute extends Attribute {
 
     @Override
     public boolean hasSpecial() {
-        return false;
+        return true;
+    }
+
+    @Override
+    public void onUpdate(InfernalEntity entity) {
+        if(!this.hasTarget()) return;
+        this.useSpecial(entity, null);
     }
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
-        if(event.getEntity().isDead()) return;
-        LivingEntity entity = event.getInfernalEntity().getEntity();
-        // Invisibility for 15 seconds on hit
-        if(entity.hasPotionEffect(PotionEffectType.INVISIBILITY)) return;
-        entity.addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(10 * 20, 0));
+        this.useSpecial(event.getInfernalEntity(), null);
+    }
+
+    @Override
+    public void useSpecial(InfernalEntity source, LivingEntity target) {
+        long time = System.currentTimeMillis();
+        if(!this.canUseAbility()) return;
+        this.deltaTime = time + this.getCooldown();
+        source.getEntity().addPotionEffect(PotionEffectType.INVISIBILITY.createEffect(200, 0));
+    }
+
+    @Override
+    public long getCooldown() {
+        return 10000L;
+    }
+
+    @Override
+    public long getDeltaTime() {
+        return this.deltaTime;
     }
 
 }
