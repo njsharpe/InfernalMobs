@@ -31,7 +31,7 @@ public abstract class Attribute implements Keyed {
     public static final Attribute GRAVITY = new GravityAttribute("gravity");
     public static final Attribute LIFESTEAL = new LifestealAttribute("lifesteal");
     public static final Attribute NINJA = new NinjaAttribute("ninja");
-//    public static final Attribute POISONOUS = new AttributeWrapper("poisonous");
+    public static final Attribute POISONOUS = new PoisonousAttribute("poisonous");
 //    public static final Attribute QUICKSAND = new AttributeWrapper("quicksand");
 //    public static final Attribute REGEN = new AttributeWrapper("regen");
 //    public static final Attribute RUST = new AttributeWrapper("rust");

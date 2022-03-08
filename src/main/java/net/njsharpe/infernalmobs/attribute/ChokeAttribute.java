@@ -18,6 +18,8 @@ import java.lang.reflect.InvocationTargetException;
 public class ChokeAttribute extends Attribute {
 
     private static final int RESET_AIR_VALUE = -999;
+    private static final int MAXIMUM_AIR = 300;
+
     private LivingEntity target;
     private int air;
 
@@ -68,8 +70,8 @@ public class ChokeAttribute extends Attribute {
     public void onHurt(InfernalEntityHurtEvent event) {
         if(this.target != null && event.getDamager() == this.target && this.air != RESET_AIR_VALUE) {
             this.air += 60;
-            if(this.air > this.target.getMaximumAir()) {
-                this.air = this.target.getMaximumAir();
+            if(this.air > MAXIMUM_AIR) {
+                this.air = MAXIMUM_AIR;
             }
             this.send(this.air);
         }
@@ -77,7 +79,7 @@ public class ChokeAttribute extends Attribute {
 
     @Override
     public void onDeath(InfernalEntityDeathEvent event) {
-        this.air = this.target.getMaximumAir();
+        this.air = MAXIMUM_AIR;
         if(this.target != null) {
             this.send(this.air);
             this.target = null;
