@@ -83,7 +83,7 @@ public class GravityAttribute extends Attribute implements Cooldown {
         dz -= z / np * kp;
 
         if(dy > 0.4000000059604645D) {
-            dy = 4000000059604645D;
+            dy = 0.4000000059604645D;
         }
         entity.setVelocity(new Vector(dx, dy, dz));
     }
