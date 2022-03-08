@@ -1,0 +1,12 @@
+name: InfernalMobs
+main: net.njsharpe.infernalmobs.InfernalMobs
+version: ${version}
+author: NoEffort
+
+depend: [ProtocolLib]
+
+api-version: 1.15
+
+commands:
+  infernalmobs:
+    aliases: [im]

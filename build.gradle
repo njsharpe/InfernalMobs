@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group 'net.njsharpe.infernalmobs'
+version '1.0.0'
+
+task dev {
+    dependsOn shadowJar
+    doLast {
+        copy {
+            from 'build/libs/AlwaysInventory.jar'
+            into project.properties['development.snapshots_dir']
+        }
+    }
+}
+
+task prod {
+    dependsOn shadowJar
+    doLast {
+        copy {
+            from 'build/libs/AlwaysInventory.jar'
+            into project.properties['production.releases_dir']
+        }
+    }
+}
+
+shadowJar {
+    minimize()
+    relocate 'net.njsharpe.developmentutility', 'net.njsharpe.infernalmobs.shaded.developmentutility'
+    dependencies {
+        exclude(dependency('org.jetbrains:annotations:.*'))
+    }
+    archiveBaseName.set('InfernalMobs')
+    archiveClassifier.set('')
+}
+
+processResources {
+    filesMatching('plugin.yml') {
+        expand 'version': project.version
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://oss.sonatype.org/repositories/snapshots/' }
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://repo.dmulloy2.net/repository/public/' }
+    maven {
+        url = 'http://10.0.0.25:8081/repository/nexus-release'
+        allowInsecureProtocol = true
+    }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly 'com.comphenix.protocol:ProtocolLib:4.7.0'
+    implementation 'org.jetbrains:annotations:22.0.0'
+    implementation 'net.njsharpe:developmentutility:1.0.0-b8'
+}
