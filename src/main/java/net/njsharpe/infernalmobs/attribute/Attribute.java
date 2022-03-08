@@ -5,6 +5,7 @@ import net.njsharpe.infernalmobs.event.*;
 import net.njsharpe.infernalmobs.util.EntityHelper;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
+import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.jetbrains.annotations.Contract;
@@ -86,6 +87,8 @@ public abstract class Attribute implements Keyed {
                 this.target = null;
             }
         }
+        KeyedBossBar bar = entity.getOrCreateBossBar();
+        bar.setProgress(entity.getHealth() / entity.getMaxHealth());
     }
     public void onHurt(InfernalEntityHurtEvent event) {}
     public void onAttack(InfernalEntityAttackEvent event) {}

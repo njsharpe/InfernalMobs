@@ -20,7 +20,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.world.WorldEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 
@@ -28,6 +28,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class EntityHandler implements Listener {
+
+    public Plugin getPlugin() {
+        return InfernalMobs.get().orElseThrow(IllegalStateException::new);
+    }
 
     @EventHandler
     public void onPlayerLook(PlayerMoveEvent event) {
@@ -60,7 +64,8 @@ public class EntityHandler implements Listener {
         Iterator<KeyedBossBar> bars = Bukkit.getServer().getBossBars();
         while(bars.hasNext()) {
             KeyedBossBar bar = bars.next();
-            bar.removePlayer(event.getPlayer());
+            if(bar.getKey().getNamespace().equalsIgnoreCase(this.getPlugin().getName()))
+                bar.removePlayer(event.getPlayer());
         }
     }
 
@@ -69,7 +74,8 @@ public class EntityHandler implements Listener {
         Iterator<KeyedBossBar> bars = Bukkit.getServer().getBossBars();
         while(bars.hasNext()) {
             KeyedBossBar bar = bars.next();
-            bar.removePlayer(event.getPlayer());
+            if(bar.getKey().getNamespace().equalsIgnoreCase(this.getPlugin().getName()))
+                bar.removePlayer(event.getPlayer());
         }
     }
 
@@ -178,16 +184,13 @@ public class EntityHandler implements Listener {
                 InfernalEntityDeathEvent e = new InfernalEntityDeathEvent(infernal, new ArrayList<>(), 0);
                 Bukkit.getServer().getPluginManager().callEvent(e);
             }
-        }.runTaskLater(InfernalMobs.get().orElseThrow(IllegalStateException::new), 1L);
+        }.runTaskLater(this.getPlugin(), 1L);
     }
 
     @EventHandler
     public void onInfernalEntityDamage(InfernalEntityHurtEvent event) {
         InfernalEntity entity = event.getInfernalEntity();
         entity.getAttributes().forEach(attribute -> attribute.onHurt(event));
-        KeyedBossBar bar = entity.getOrCreateBossBar();
-        double progress = ((entity.getHealth() - event.getFinalDamage()) / entity.getMaxHealth());
-        bar.setProgress(Math.max(progress, 0.0D));
     }
 
     @EventHandler
