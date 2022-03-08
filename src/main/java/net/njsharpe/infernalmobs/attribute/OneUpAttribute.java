@@ -11,6 +11,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class OneUpAttribute extends Attribute {
 
+    private boolean healed;
+
     public OneUpAttribute(@NotNull String name) {
         super(new NamespacedKey(InfernalMobs.get().orElseThrow(IllegalArgumentException::new), name));
     }
@@ -33,19 +35,12 @@ public class OneUpAttribute extends Attribute {
     }
 
     @Override
-    public void onHurt(InfernalEntityHurtEvent event) {
-        super.onHurt(event);
-        InfernalEntity entity = event.getInfernalEntity();
-        if(!entity.has("healed", PersistentDataType.INTEGER)) {
-            entity.set("healed", PersistentDataType.INTEGER, 0);
-        }
-        // Already Healed
-        if(entity.get("healed", PersistentDataType.INTEGER).orElse(0) != 0) return;
-        double health = entity.getHealth() - event.getFinalDamage();
-        if(health < (entity.getMaxHealth() * 0.25D)) {
+    public void onUpdate(InfernalEntity entity) {
+        super.onUpdate(entity);
+        if(!this.healed && entity.getHealth() < (entity.getMaxHealth() * 0.25)) {
             entity.setHealth(entity.getMaxHealth());
             entity.playSound(Sound.ENTITY_PLAYER_LEVELUP);
-            entity.set("healed", PersistentDataType.INTEGER, 1);
+            this.healed = true;
         }
     }
 
