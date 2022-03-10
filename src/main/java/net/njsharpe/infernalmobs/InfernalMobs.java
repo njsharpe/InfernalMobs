@@ -38,7 +38,7 @@ public class InfernalMobs extends JavaPlugin {
         Attribute.registerAttribute(Attribute.QUICKSAND);
         Attribute.registerAttribute(Attribute.REGEN);
         Attribute.registerAttribute(Attribute.RUST);
-//        Attribute.registerAttribute(Attribute.SAPPER);
+        Attribute.registerAttribute(Attribute.SAPPER);
 //        Attribute.registerAttribute(Attribute.SPRINT);
 //        Attribute.registerAttribute(Attribute.STICKY);
 //        Attribute.registerAttribute(Attribute.STORM);
