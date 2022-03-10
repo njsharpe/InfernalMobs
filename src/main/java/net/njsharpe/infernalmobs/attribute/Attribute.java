@@ -34,7 +34,7 @@ public abstract class Attribute implements Keyed {
     public static final Attribute POISONOUS = new PoisonousAttribute("poisonous");
     public static final Attribute QUICKSAND = new QuicksandAttribute("quicksand");
     public static final Attribute REGEN = new RegenAttribute("regen");
-//    public static final Attribute RUST = new AttributeWrapper("rust");
+    public static final Attribute RUST = new RustAttribute("rust");
 //    public static final Attribute SAPPER = new AttributeWrapper("sapper");
 //    public static final Attribute SPRINT = new AttributeWrapper("sprint");
 //    public static final Attribute STICKY = new AttributeWrapper("sticky");
