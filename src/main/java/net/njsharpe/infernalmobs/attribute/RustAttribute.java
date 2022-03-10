@@ -39,6 +39,7 @@ public class RustAttribute extends Attribute {
 
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
+        super.onHurt(event);
         if(!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
         ItemStack hand = player.getInventory().getItemInMainHand();
