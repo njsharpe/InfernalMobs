@@ -39,7 +39,7 @@ public abstract class Attribute implements Keyed {
     public static final Attribute SPRINT = new SprintAttribute("sprint");
     public static final Attribute STICKY = new StickyAttribute("sticky");
     public static final Attribute STORM = new StormAttribute("storm");
-//    public static final Attribute VENGEANCE = new AttributeWrapper("vengeance");
+    public static final Attribute VENGEANCE = new VengeanceAttribute("vengeance");
 //    public static final Attribute WEAKNESS = new AttributeWrapper("weakness");
 //    public static final Attribute WEBBER = new AttributeWrapper("webber");
 //    public static final Attribute WITHER = new AttributeWrapper("wither");
