@@ -48,8 +48,11 @@ public class WebberAttribute extends Attribute implements Cooldown {
     @Override
     public void onHurt(InfernalEntityHurtEvent event) {
         super.onHurt(event);
-       if(event.getDamager() == null) return;
-       this.useSpecial(event.getInfernalEntity(), event.getDamager());
+        if(event.getDamager() == null) return;
+        long time = System.currentTimeMillis();
+        if(!this.canUseAbility()) return;
+        this.deltaTime = time + this.getCooldown();
+        this.useSpecial(event.getInfernalEntity(), event.getDamager());
     }
 
     @Override
