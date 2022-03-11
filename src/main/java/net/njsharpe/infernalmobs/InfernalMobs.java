@@ -43,7 +43,7 @@ public class InfernalMobs extends JavaPlugin {
         Attribute.registerAttribute(Attribute.STICKY);
         Attribute.registerAttribute(Attribute.STORM);
         Attribute.registerAttribute(Attribute.VENGEANCE);
-//        Attribute.registerAttribute(Attribute.WEAKNESS);
+        Attribute.registerAttribute(Attribute.WEAKNESS);
 //        Attribute.registerAttribute(Attribute.WEBBER);
 //        Attribute.registerAttribute(Attribute.WITHER);
         Attribute.stopAcceptingRegistrations();
