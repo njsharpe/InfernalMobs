@@ -53,8 +53,7 @@ public class BlastoffAttribute extends Attribute implements Cooldown {
 
     @Override
     public boolean conflictsWith(Attribute attribute) {
-//        return attribute.equals(Attribute.WEBBER);
-        return false;
+        return attribute.equals(Attribute.WEBBER);
     }
 
     @Override
