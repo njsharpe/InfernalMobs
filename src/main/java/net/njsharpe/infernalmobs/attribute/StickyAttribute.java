@@ -35,8 +35,7 @@ public class StickyAttribute extends Attribute implements Cooldown {
 
     @Override
     public boolean conflictsWith(Attribute attribute) {
-//        return attribute.equals(Attribute.STORM);
-        return false;
+        return attribute.equals(Attribute.STORM);
     }
 
     @Override
