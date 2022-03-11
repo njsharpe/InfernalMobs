@@ -45,7 +45,7 @@ public class InfernalMobs extends JavaPlugin {
         Attribute.registerAttribute(Attribute.VENGEANCE);
         Attribute.registerAttribute(Attribute.WEAKNESS);
         Attribute.registerAttribute(Attribute.WEBBER);
-//        Attribute.registerAttribute(Attribute.WITHER);
+        Attribute.registerAttribute(Attribute.WITHER);
         Attribute.stopAcceptingRegistrations();
 
         this.getServer().getPluginManager().registerEvents(new EntityHandler(), this);

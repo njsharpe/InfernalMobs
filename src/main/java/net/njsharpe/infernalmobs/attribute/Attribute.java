@@ -42,7 +42,7 @@ public abstract class Attribute implements Keyed {
     public static final Attribute VENGEANCE = new VengeanceAttribute("vengeance");
     public static final Attribute WEAKNESS = new WeaknessAttribute("weakness");
     public static final Attribute WEBBER = new WebberAttribute("webber");
-//    public static final Attribute WITHER = new AttributeWrapper("wither");
+    public static final Attribute WITHER = new WitherAttribute("wither");
 
     private static final int TICKS_BEFORE_ATTACK = 30;
 
