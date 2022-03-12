@@ -7,6 +7,7 @@ import net.njsharpe.infernalmobs.util.ProjectileHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.inventory.ItemStack;
@@ -84,11 +85,12 @@ public class AlchemistAttribute extends Attribute implements Cooldown {
             meta.addCustomEffect(type.createEffect(duration, amplifier), true);
             item.setItemMeta(meta);
 
-            ThrownPotion potion = entity.launchProjectile(ThrownPotion.class);
+            ThrownPotion potion = source.getWorld().spawn(s, ThrownPotion.class);
             potion.setItem(item);
 
             EntityHelper.setYRot(potion, EntityHelper.getXRot(potion) + 20.0F);
             ProjectileHelper.shoot(potion, random, x, y + (double)(distance * 0.2F), z, 0.75F, 8.0F);
+            source.playSound(Sound.ENTITY_WITCH_THROW);
         }
     }
 
