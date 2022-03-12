@@ -3,6 +3,7 @@ package net.njsharpe.infernalmobs.command;
 import net.njsharpe.developmentutility.AdvancedCommandExecutor;
 import net.njsharpe.developmentutility.CommandTree;
 import net.njsharpe.infernalmobs.InfernalMobs;
+import net.njsharpe.infernalmobs.file.ConfigurationFile;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -16,6 +17,9 @@ public class InfernalMobsCommand extends AdvancedCommandExecutor {
         super(InfernalMobs.get().orElseThrow(IllegalStateException::new), "infernalmobs");
         CommandTree tree = this.getTree();
         tree.addCommand("reload", (sender) -> {
+            ConfigurationFile config = ConfigurationFile.get();
+            config.reload();
+            config.save();
             sender.sendMessage("Reloaded!");
             return true;
         }, (sender) -> {});

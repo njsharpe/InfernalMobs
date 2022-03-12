@@ -8,6 +8,7 @@ import net.njsharpe.infernalmobs.InfernalMobs;
 import net.njsharpe.infernalmobs.attribute.Attribute;
 import net.njsharpe.infernalmobs.entity.InfernalEntity;
 import net.njsharpe.infernalmobs.event.*;
+import net.njsharpe.infernalmobs.file.ConfigurationFile;
 import net.njsharpe.infernalmobs.util.ArrayHelper;
 import net.njsharpe.infernalmobs.util.RandomHelper;
 import net.njsharpe.infernalmobs.util.RandomSet;
@@ -36,6 +37,7 @@ public class EntityHandler implements Listener {
     @EventHandler
     public void onPlayerLook(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+        if(ConfigurationFile.get().isHealthBarDisabled()) return;
         List<Entity> entities = player.getNearbyEntities(32, 32, 32);
         entities.forEach(entity -> {
             if(!(entity instanceof LivingEntity)) return;
@@ -81,13 +83,20 @@ public class EntityHandler implements Listener {
 
     @EventHandler
     public void onEntitySpawn(EntitySpawnEvent event) {
+        if(ConfigurationFile.get().getBlacklistedWorlds().contains(event.getLocation().getWorld())) return;
         if(!(event.getEntity() instanceof LivingEntity)) return;
         LivingEntity entity = (LivingEntity) event.getEntity();
         if(!(entity instanceof Monster)) return;
         Random random = new Random();
-        float chance = random.nextFloat();
+        ConfigurationFile config = ConfigurationFile.get();
         int count = 2 + random.nextInt(3);
-        if(chance >= 0.95F) {
+        if(random.nextInt(config.getUltraRarity()) == 0) {
+            count += 3 + random.nextInt(2);
+            if(random.nextInt(config.getInfernalRarity()) == 0) {
+                count += 3 + random.nextInt(2);
+            }
+        }
+        if(random.nextInt(config.getEliteRarity()) == 0) {
             RandomSet<Attribute> set = new RandomSet<>(Arrays.asList(Attribute.values()));
             List<Attribute> attributes = new ArrayList<>();
             for(int i = 0; i < count; i++) {

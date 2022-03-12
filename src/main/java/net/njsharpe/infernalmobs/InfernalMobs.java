@@ -2,6 +2,7 @@ package net.njsharpe.infernalmobs;
 
 import net.njsharpe.infernalmobs.attribute.Attribute;
 import net.njsharpe.infernalmobs.command.InfernalMobsCommand;
+import net.njsharpe.infernalmobs.file.ConfigurationFile;
 import net.njsharpe.infernalmobs.handler.EntityHandler;
 import net.njsharpe.infernalmobs.util.ArrayHelper;
 import org.bukkit.boss.KeyedBossBar;
@@ -47,6 +48,9 @@ public class InfernalMobs extends JavaPlugin {
         Attribute.registerAttribute(Attribute.WEBBER);
         Attribute.registerAttribute(Attribute.WITHER);
         Attribute.stopAcceptingRegistrations();
+
+        // Initialize Configuration
+        ConfigurationFile.get();
 
         this.getServer().getPluginManager().registerEvents(new EntityHandler(), this);
         this.getCommand("infernalmobs").setExecutor(new InfernalMobsCommand());

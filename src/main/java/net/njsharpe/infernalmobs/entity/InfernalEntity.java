@@ -125,10 +125,12 @@ public class InfernalEntity {
     public KeyedBossBar getOrCreateBossBar() {
         KeyedBossBar bar = Bukkit.getServer().getBossBar(this.key);
         if(bar == null) {
+            int size = this.attributes.size();
+            BarColor color = (size <= 5) ? BarColor.GREEN : (size <= 10) ? BarColor.YELLOW : BarColor.RED;
             KeyedBossBar b = Bukkit.createBossBar(this.key, Format.colorize("&b%s &r(%s)", this.entity.getName(),
                             this.attributes.stream().map(Attribute::getName)
                                     .collect(Collectors.joining(" "))),
-                    BarColor.PINK, BarStyle.SOLID);
+                    color, BarStyle.SOLID);
             b.setProgress(1.0D);
             return b;
         }
