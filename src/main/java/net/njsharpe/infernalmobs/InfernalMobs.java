@@ -1,11 +1,10 @@
 package net.njsharpe.infernalmobs;
 
+import net.njsharpe.developmentutility.helper.ArrayHelper;
 import net.njsharpe.infernalmobs.attribute.Attribute;
 import net.njsharpe.infernalmobs.command.InfernalMobsCommand;
 import net.njsharpe.infernalmobs.file.ConfigurationFile;
 import net.njsharpe.infernalmobs.handler.EntityHandler;
-import net.njsharpe.infernalmobs.util.ArrayHelper;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.boss.KeyedBossBar;

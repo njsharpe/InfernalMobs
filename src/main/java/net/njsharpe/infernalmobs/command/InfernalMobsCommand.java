@@ -1,7 +1,7 @@
 package net.njsharpe.infernalmobs.command;
 
-import net.njsharpe.developmentutility.AdvancedCommandExecutor;
-import net.njsharpe.developmentutility.CommandTree;
+import net.njsharpe.developmentutility.command.AdvancedCommandExecutor;
+import net.njsharpe.developmentutility.command.CommandTree;
 import net.njsharpe.infernalmobs.InfernalMobs;
 import net.njsharpe.infernalmobs.file.ConfigurationFile;
 import org.bukkit.Material;
