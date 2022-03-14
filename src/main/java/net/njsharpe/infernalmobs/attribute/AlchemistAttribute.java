@@ -1,9 +1,9 @@
 package net.njsharpe.infernalmobs.attribute;
 
+import net.njsharpe.developmentutility.helper.EntityHelper;
+import net.njsharpe.developmentutility.helper.ProjectileHelper;
 import net.njsharpe.infernalmobs.InfernalMobs;
 import net.njsharpe.infernalmobs.entity.InfernalEntity;
-import net.njsharpe.infernalmobs.util.EntityHelper;
-import net.njsharpe.infernalmobs.util.ProjectileHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

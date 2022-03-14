@@ -1,9 +1,9 @@
 package net.njsharpe.infernalmobs.entity;
 
 import net.njsharpe.developmentutility.Format;
+import net.njsharpe.developmentutility.helper.RandomHelper;
 import net.njsharpe.infernalmobs.InfernalMobs;
 import net.njsharpe.infernalmobs.attribute.Attribute;
-import net.njsharpe.infernalmobs.util.RandomHelper;
 import org.bukkit.*;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.boss.BarColor;

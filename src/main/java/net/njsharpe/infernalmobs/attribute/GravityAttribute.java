@@ -1,5 +1,6 @@
 package net.njsharpe.infernalmobs.attribute;
 
+import net.njsharpe.developmentutility.helper.EntityHelper;
 import net.njsharpe.infernalmobs.InfernalMobs;
 import net.njsharpe.infernalmobs.entity.InfernalEntity;
 import org.bukkit.Location;
@@ -63,29 +64,7 @@ public class GravityAttribute extends Attribute implements Cooldown {
         }
 
         source.playSound(Sound.ENTITY_IRON_GOLEM_ATTACK);
-        this.push(target, x, z);
-    }
-
-    private void push(LivingEntity entity, double x, double z) {
-        float np = (float) Math.sqrt(x * x + z * z);
-        float kp = 0.8F;
-
-        Vector velocity = entity.getVelocity();
-        double dx = velocity.getX();
-        double dy = velocity.getX();
-        double dz = velocity.getX();
-
-        dx /= 2.0D;
-        dy /= 2.0D;
-        dz /= 2.0D;
-        dx -= x / np * kp;
-        dy += kp;
-        dz -= z / np * kp;
-
-        if(dy > 0.4000000059604645D) {
-            dy = 0.4000000059604645D;
-        }
-        entity.setVelocity(new Vector(dx, dy, dz));
+        EntityHelper.push(target, x, z);
     }
 
     @Override

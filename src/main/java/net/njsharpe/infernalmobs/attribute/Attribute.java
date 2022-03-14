@@ -1,8 +1,8 @@
 package net.njsharpe.infernalmobs.attribute;
 
+import net.njsharpe.developmentutility.helper.EntityHelper;
 import net.njsharpe.infernalmobs.entity.InfernalEntity;
 import net.njsharpe.infernalmobs.event.*;
-import net.njsharpe.infernalmobs.util.EntityHelper;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.boss.KeyedBossBar;

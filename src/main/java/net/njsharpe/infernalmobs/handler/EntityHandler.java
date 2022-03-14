@@ -3,13 +3,13 @@ package net.njsharpe.infernalmobs.handler;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.njsharpe.developmentutility.Format;
+import net.njsharpe.developmentutility.data.RandomSet;
+import net.njsharpe.developmentutility.helper.ArrayHelper;
 import net.njsharpe.infernalmobs.InfernalMobs;
 import net.njsharpe.infernalmobs.attribute.Attribute;
 import net.njsharpe.infernalmobs.entity.InfernalEntity;
 import net.njsharpe.infernalmobs.event.*;
 import net.njsharpe.infernalmobs.file.ConfigurationFile;
-import net.njsharpe.infernalmobs.util.ArrayHelper;
-import net.njsharpe.infernalmobs.util.RandomSet;
 import org.bukkit.*;
 import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.*;
@@ -100,7 +100,7 @@ public class EntityHandler implements Listener {
             for(int i = 0; i < count; i++) {
                 Attribute attribute = set.random(random);
                 if(attribute == null) continue;
-                if(ArrayHelper.isIn(entity.getType(), attribute.getBlacklist())) continue;
+                if(ArrayHelper.contains(entity.getType(), attribute.getBlacklist())) continue;
                 if(attributes.stream().anyMatch(a -> a.conflictsWith(attribute))) continue;
                 attributes.add(attribute);
             }

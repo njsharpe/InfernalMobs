@@ -3,7 +3,6 @@ package net.njsharpe.infernalmobs.attribute;
 import net.njsharpe.infernalmobs.InfernalMobs;
 import net.njsharpe.infernalmobs.entity.InfernalEntity;
 import net.njsharpe.infernalmobs.event.InfernalEntityHurtEvent;
-import net.njsharpe.infernalmobs.util.EntityHelper;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
