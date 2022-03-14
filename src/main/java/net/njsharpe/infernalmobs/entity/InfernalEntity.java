@@ -10,10 +10,8 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,8 +37,7 @@ public class InfernalEntity {
         entity.setHealth(instance.getBaseValue());
         this.entity = entity;
         this.attributes = attributes;
-        this.key = new NamespacedKey(InfernalMobs.get().orElseThrow(IllegalStateException::new),
-                this.entity.getUniqueId().toString());
+        this.key = new NamespacedKey(this.getPlugin(), this.entity.getUniqueId().toString());
     }
 
     @NotNull
@@ -108,7 +105,7 @@ public class InfernalEntity {
                     }
                     getAttributes().forEach(attribute -> attribute.onUpdate(entity));
                 }
-            }.runTaskTimer(InfernalMobs.get().orElseThrow(IllegalStateException::new),
+            }.runTaskTimer(this.getPlugin(),
                     0L, 1L);
         };
     }
@@ -138,7 +135,6 @@ public class InfernalEntity {
     }
 
     public void playParticles() {
-        Plugin plugin = InfernalMobs.get().orElseThrow(IllegalStateException::new);
         Random random = new Random();
         World world = this.entity.getWorld();
         new BukkitRunnable() {
@@ -156,24 +152,24 @@ public class InfernalEntity {
                 }
             }
         }
-        .runTaskTimerAsynchronously(plugin, 0L, 5L);
+        .runTaskTimerAsynchronously(this.getPlugin(), 0L, 5L);
     }
 
     public <T, K> boolean has(@NotNull String id, @NotNull PersistentDataType<T, K> type) {
         PersistentDataContainer container = this.entity.getPersistentDataContainer();
-        NamespacedKey key = new NamespacedKey(InfernalMobs.get().orElseThrow(IllegalStateException::new), id);
+        NamespacedKey key = new NamespacedKey(this.getPlugin(), id);
         return container.has(key, type);
     }
 
     public <T, K> void set(@NotNull String id, @NotNull PersistentDataType<T, K> type, @NotNull K value) {
         PersistentDataContainer container = this.entity.getPersistentDataContainer();
-        NamespacedKey key = new NamespacedKey(InfernalMobs.get().orElseThrow(IllegalStateException::new), id);
+        NamespacedKey key = new NamespacedKey(this.getPlugin(), id);
         container.set(key, type, value);
     }
 
     public <T, K> Optional<K> get(@NotNull String id, @NotNull PersistentDataType<T, K> type) {
         PersistentDataContainer container = this.entity.getPersistentDataContainer();
-        NamespacedKey key = new NamespacedKey(InfernalMobs.get().orElseThrow(IllegalStateException::new), id);
+        NamespacedKey key = new NamespacedKey(this.getPlugin(), id);
         return Optional.ofNullable(container.get(key, type));
     }
 
@@ -182,11 +178,6 @@ public class InfernalEntity {
             if(a.getKey().equals(attribute.getKey())) return true;
         }
         return false;
-    }
-
-    @NotNull
-    public static ItemStack getRandomDrop() {
-        return new ItemStack(Material.STONE, 1);
     }
 
     public static boolean isInfernal(LivingEntity entity) {
@@ -212,6 +203,10 @@ public class InfernalEntity {
                 Bukkit.getServer().removeBossBar(bar.getKey());
             }
         });
+    }
+
+    public InfernalMobs getPlugin() {
+        return InfernalMobs.get().orElseThrow(IllegalStateException::new);
     }
 
 }

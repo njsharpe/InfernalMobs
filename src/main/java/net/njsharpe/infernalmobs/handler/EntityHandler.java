@@ -1,6 +1,5 @@
 package net.njsharpe.infernalmobs.handler;
 
-import com.sun.tools.javac.comp.Infer;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.njsharpe.developmentutility.Format;
@@ -10,7 +9,6 @@ import net.njsharpe.infernalmobs.entity.InfernalEntity;
 import net.njsharpe.infernalmobs.event.*;
 import net.njsharpe.infernalmobs.file.ConfigurationFile;
 import net.njsharpe.infernalmobs.util.ArrayHelper;
-import net.njsharpe.infernalmobs.util.RandomHelper;
 import net.njsharpe.infernalmobs.util.RandomSet;
 import org.bukkit.*;
 import org.bukkit.boss.KeyedBossBar;
@@ -21,7 +19,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.loot.LootTable;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 
@@ -30,7 +28,7 @@ import java.util.stream.Collectors;
 
 public class EntityHandler implements Listener {
 
-    public Plugin getPlugin() {
+    public InfernalMobs getPlugin() {
         return InfernalMobs.get().orElseThrow(IllegalStateException::new);
     }
 
@@ -109,6 +107,7 @@ public class EntityHandler implements Listener {
             attributes = attributes.stream().filter(Objects::nonNull).collect(Collectors.toList());
             if(attributes.size() <= 0) event.setCancelled(true);
             InfernalEntity infernal = new InfernalEntity(entity, attributes);
+            ((Mob) entity).setLootTable(this.getLootTable(infernal));
             InfernalEntitySpawnEvent e = new InfernalEntitySpawnEvent(infernal);
             Bukkit.getServer().getPluginManager().callEvent(e);
             event.setCancelled(e.isCancelled());
@@ -138,7 +137,6 @@ public class EntityHandler implements Listener {
         InfernalEntityDeathEvent e = new InfernalEntityDeathEvent(entity, event.getDrops(), event.getDroppedExp());
         Bukkit.getServer().getPluginManager().callEvent(e);
         event.setDroppedExp(e.getDroppedExp());
-        entity.getWorld().dropItem(entity.getLocation(), InfernalEntity.getRandomDrop());
     }
 
     @EventHandler
@@ -288,6 +286,14 @@ public class EntityHandler implements Listener {
     public void onInfernalEntityFall(InfernalEntityFallEvent event) {
         InfernalEntity entity = event.getInfernalEntity();
         entity.getAttributes().forEach(attribute -> attribute.onFall(event));
+    }
+
+    private LootTable getLootTable(InfernalEntity entity) {
+        int size = entity.getAttributes().size();
+        LootTable table = (size <= 5) ? this.getPlugin().getEliteLootTable() : (size <= 10)
+                ? this.getPlugin().getUltraLootTable() : this.getPlugin().getInfernalLootTable();
+        if(table == null) throw new RuntimeException("No loot table to drop from!");
+        return table;
     }
 
 }
